@@ -1,0 +1,315 @@
+/* Enhanced styles for Chennai Local Guide */
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Enhanced result animations */
+.results {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.slang-result, .neighborhood-result {
+    animation: slideIn 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.slang-result:nth-child(2) { animation-delay: 0.1s; }
+.slang-result:nth-child(3) { animation-delay: 0.2s; }
+.slang-result:nth-child(4) { animation-delay: 0.3s; }
+
+.neighborhood-result:nth-child(2) { animation-delay: 0.1s; }
+.neighborhood-result:nth-child(3) { animation-delay: 0.2s; }
+.neighborhood-result:nth-child(4) { animation-delay: 0.3s; }
+
+/* Enhanced button interactions */
+.example-btn:active {
+    transform: scale(0.95);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Loading animation */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff6b35;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Enhanced responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .header {
+        padding: 20px;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+    
+    .header p {
+        font-size: 1em;
+    }
+}
+
+/* Enhanced accessibility */
+.btn:focus,
+.example-btn:focus,
+input[type="text"]:focus {
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+}
+
+/* Print styles */
+@media print {
+    .input-section,
+    .quick-examples {
+        display: none;
+    }
+    
+    .container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .header {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .btn-primary {
+        background: #000;
+        border: 2px solid #fff;
+    }
+    
+    .btn-secondary {
+        background: #333;
+        border: 2px solid #fff;
+    }
+    
+    .example-btn {
+        border: 2px solid #ff6b35;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #2c1810 0%, #3d2817 50%, #4a3520 100%);
+    }
+    
+    .container {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    input[type="text"] {
+        background: #2a2a2a;
+        color: #e0e0e0;
+        border-color: #444;
+    }
+    
+    .results {
+        background: #2a2a2a;
+    }
+    
+    .slang-result,
+    .neighborhood-result {
+        background: #333;
+    }
+    
+    .example-btn {
+        background: #2a2a2a;
+        color: #ff6b35;
+        border-color: #ff6b35;
+    }
+}
+
+/* Help system styles */
+.help-container {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.help-container h4 {
+    color: #ff6b35;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.help-container h5 {
+    color: #f7931e;
+    margin: 15px 0 8px 0;
+    font-size: 1em;
+}
+
+.help-section {
+    margin-bottom: 20px;
+}
+
+.help-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.help-example {
+    background: white;
+    border: 1px solid #ff6b35;
+    border-radius: 15px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #ff6b35;
+}
+
+.help-example:hover {
+    background: #ff6b35;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.contextual-help {
+    background: #e8f5e8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.suggestion-group {
+    margin-bottom: 20px;
+}
+
+.suggestion-group h4 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+}
+
+.suggestion-category {
+    margin-bottom: 15px;
+}
+
+.suggestion-category h5 {
+    color: #388e3c;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.suggestion-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.suggestion-note {
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    margin-top: 4px;
+}
+
+/* Enhanced error handling styles */
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #f44336;
+    margin-bottom: 15px;
+}
+
+.warning-message {
+    background: #fff3e0;
+    color: #ef6c00;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #ff9800;
+    margin-bottom: 15px;
+}
+
+.info-message {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #2196f3;
+    margin-bottom: 15px;
+}
+
+/* Accessibility improvements */
+.help-example:focus,
+.suggestion-item:focus {
+    outline: 2px solid #ff6b35;
+    outline-offset: 2px;
+}
+
+/* Mobile responsiveness for help system */
+@media (max-width: 600px) {
+    .help-examples,
+    .suggestion-examples {
+        flex-direction: column;
+    }
+    
+    .help-example,
+    .suggestion-item {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .help-container,
+    .contextual-help {
+        padding: 15px;
+    }
+}

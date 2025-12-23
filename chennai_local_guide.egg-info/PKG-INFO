@@ -1,0 +1,88 @@
+Metadata-Version: 2.4
+Name: chennai-local-guide
+Version: 1.0.0
+Summary: A tool for content creators to navigate Chennai authentically
+Author: Content Creator Tools
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: dataclasses; python_version < "3.7"
+Provides-Extra: test
+Requires-Dist: pytest>=7.0.0; extra == "test"
+Requires-Dist: hypothesis>=6.0.0; extra == "test"
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Chennai Local Guide
+
+A specialized tool that helps content creators navigate Chennai authentically by providing local slang translation and neighborhood recommendations with Google Maps integration.
+
+## Features
+
+- **Slang Translation**: Identify and translate Chennai slang terms with cultural context
+- **Neighborhood Recommendations**: Get content-type aware neighborhood suggestions
+- **Google Maps Integration**: Direct links to recommended locations
+- **Content Creator Tips**: Specific advice for authentic content creation
+
+## Project Structure
+
+```
+chennai_guide/
+├── models/          # Data models (SlangTerm, Neighborhood, etc.)
+├── parsers/         # Context file parsers and interfaces
+├── api/             # Query processing and response generation
+└── __init__.py
+
+tests/
+├── property_tests/  # Property-based tests using Hypothesis
+├── conftest.py      # Test configuration and fixtures
+└── test_models.py   # Unit tests for data models
+```
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+## Testing
+
+Run unit tests:
+```bash
+pytest tests/test_models.py
+```
+
+Run property-based tests:
+```bash
+pytest tests/property_tests/ -m property
+```
+
+Run all tests:
+```bash
+pytest
+```
+
+## Development
+
+The system is designed around two core functions:
+1. **Slang Translation** - Identifies Chennai slang and provides definitions with cultural context
+2. **Neighborhood Recommendations** - Suggests areas based on content type preferences
+
+All local knowledge comes from a single `product.md` context file that serves as the source of truth for Chennai cultural information.

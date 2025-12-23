@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Vlogger's Local Guide - NYC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .quick-examples {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .example-btn {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .slang-result {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .slang-term {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+
+        .slang-definition {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .slang-usage {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .vlogger-tip {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffa500;
+        }
+
+        .neighborhood-result {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .neighborhood-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .neighborhood-vibe {
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .neighborhood-best-for {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            color: #2e7d32;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .quick-examples {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Vlogger's Local Guide</h1>
+            <p>NYC Slang Translator & Neighborhood Finder</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="queryInput" placeholder="Ask about NYC slang or where to film content..." />
+                    <button class="btn btn-primary" onclick="processQuery()">🔍 Search</button>
+                </div>
+                
+                <div class="quick-examples">
+                    <button class="example-btn" onclick="setQuery('What does deadass mean?')">deadass meaning?</button>
+                    <button class="example-btn" onclick="setQuery('Where to film food content?')">food spots?</button>
+                    <button class="example-btn" onclick="setQuery('What is brick weather?')">brick weather?</button>
+                    <button class="example-btn" onclick="setQuery('Best artsy neighborhoods?')">artsy areas?</button>
+                    <button class="example-btn" onclick="setQuery('schmear on bagel')">schmear?</button>
+                </div>
+            </div>
+            
+            <div id="results" class="results">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Local context data parsed from product.md
+        const localContext = {
+            slang: {
+                'deadass': {
+                    definition: 'Seriously, for real. Used to emphasize truth or agreement.',
+                    usage: 'Deadass, that pizza spot is fire',
+                    vlogger_tip: 'Great for authentic reactions, use when genuinely surprised'
+                },
+                'bodega': {
+                    definition: 'Corner store, usually family-owned',
+                    usage: 'Grab some snacks from the bodega',
+                    vlogger_tip: 'Perfect B-roll content, locals love when tourists appreciate bodegas'
+                },
+                'mad': {
+                    definition: 'Very, extremely',
+                    usage: 'This line is mad long',
+                    vlogger_tip: 'Use naturally in commentary, shows you get the local vibe'
+                },
+                'brick': {
+                    definition: 'Very cold weather',
+                    usage: 'It\'s brick outside today',
+                    vlogger_tip: 'Great for weather transitions in vlogs'
+                },
+                'schmear': {
+                    definition: 'Cream cheese spread (bagel context)',
+                    usage: 'Everything bagel with a schmear',
+                    vlogger_tip: 'Essential for authentic NYC food content'
+                },
+                'the city': {
+                    definition: 'Manhattan (when you\'re in other boroughs)',
+                    usage: 'Taking the train into the city',
+                    vlogger_tip: 'Shows you understand NYC geography'
+                }
+            },
+            neighborhoods: {
+                'lower east side': {
+                    name: 'Lower East Side (LES)',
+                    vibe: 'Trendy, artsy, nightlife',
+                    best_for: 'Street art, vintage shopping, food tours',
+                    tags: ['trendy', 'art', 'food', 'nightlife']
+                },
+                'williamsburg': {
+                    name: 'Williamsburg, Brooklyn',
+                    vibe: 'Hipster central, waterfront views',
+                    best_for: 'Skyline shots, artisanal everything, music scene',
+                    tags: ['hipster', 'scenic', 'music', 'artisanal']
+                },
+                'chinatown': {
+                    name: 'Chinatown',
+                    vibe: 'Authentic, bustling, food paradise',
+                    best_for: 'Cultural immersion, street food, markets',
+                    tags: ['authentic', 'food', 'culture', 'markets']
+                },
+                'greenwich village': {
+                    name: 'Greenwich Village',
+                    vibe: 'Historic, cozy, celebrity spotting',
+                    best_for: 'Architecture, cafes, romantic walks',
+                    tags: ['historic', 'cozy', 'architecture', 'cafes']
+                }
+            }
+        };
+
+        function setQuery(query) {
+            document.getElementById('queryInput').value = query;
+            processQuery();
+        }
+
+        function processQuery() {
+            const query = document.getElementById('queryInput').value.trim();
+            if (!query) return;
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="loading">🔍 Analyzing your query...</div>';
+
+            // Simulate processing delay for better UX
+            setTimeout(() => {
+                const result = analyzeQuery(query);
+                displayResults(result);
+            }, 500);
+        }
+
+        function analyzeQuery(query) {
+            const queryLower = query.toLowerCase();
+            
+            // Check if it's a neighborhood query
+            const neighborhoodKeywords = ['neighborhood', 'area', 'where', 'visit', 'film', 'shoot', 'spot', 'place'];
+            const isNeighborhoodQuery = neighborhoodKeywords.some(keyword => queryLower.includes(keyword));
+            
+            if (isNeighborhoodQuery) {
+                return {
+                    type: 'neighborhood',
+                    results: getNeighborhoodRecommendations(query)
+                };
+            } else {
+                return {
+                    type: 'slang',
+                    results: translateSlang(query)
+                };
+            }
+        }
+
+        function translateSlang(query) {
+            const queryLower = query.toLowerCase();
+            const foundSlang = [];
+
+            for (const [term, info] of Object.entries(localContext.slang)) {
+                if (queryLower.includes(term)) {
+                    foundSlang.push({
+                        term: term,
+                        ...info
+                    });
+                }
+            }
+
+            return foundSlang;
+        }
+
+        function getNeighborhoodRecommendations(query) {
+            const queryLower = query.toLowerCase();
+            const recommendations = [];
+
+            // Content type scoring
+            const contentTypes = {
+                food: ['food', 'eat', 'restaurant', 'cafe', 'dining'],
+                art: ['art', 'creative', 'street art', 'culture', 'artsy'],
+                nightlife: ['night', 'party', 'bar', 'club'],
+                scenic: ['view', 'photo', 'scenic', 'skyline', 'beautiful'],
+                authentic: ['local', 'authentic', 'real', 'culture']
+            };
+
+            for (const [key, neighborhood] of Object.entries(localContext.neighborhoods)) {
+                let score = 0;
+                
+                // Score based on content type match
+                for (const [type, keywords] of Object.entries(contentTypes)) {
+                    if (keywords.some(keyword => queryLower.includes(keyword))) {
+                        if (neighborhood.tags.includes(type) || 
+                            keywords.some(keyword => neighborhood.best_for.toLowerCase().includes(keyword))) {
+                            score += 2;
+                        }
+                    }
+                }
+
+                recommendations.push({
+                    ...neighborhood,
+                    score: score
+                });
+            }
+
+            // Sort by score and return top 3
+            return recommendations
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
+        }
+
+        function displayResults(result) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (result.type === 'slang') {
+                if (result.results.length === 0) {
+                    resultsDiv.innerHTML = `
+                        <div class="no-results">
+                            🤔 No NYC slang detected in your query. Try asking about terms like "deadass", "bodega", or "brick"!
+                        </div>
+                    `;
+                } else {
+                    let html = '<h3>🗣️ NYC Slang Translation:</h3>';
+                    result.results.forEach(slang => {
+                        html += `
+                            <div class="slang-result">
+                                <div class="slang-term">"${slang.term}"</div>
+                                <div class="slang-definition">${slang.definition}</div>
+                                ${slang.usage ? `<div class="slang-usage">💬 Example: "${slang.usage}"</div>` : ''}
+                                ${slang.vlogger_tip ? `<div class="vlogger-tip">💡 Vlogger Tip: ${slang.vlogger_tip}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                }
+            } else if (result.type === 'neighborhood') {
+                if (result.results.length === 0) {
+                    resultsDiv.innerHTML = `
+                        <div class="no-results">
+                            🏙️ Try asking about specific content types like "food", "art", "nightlife", or "scenic views"!
+                        </div>
+                    `;
+                } else {
+                    let html = '<h3>🏙️ Perfect Neighborhoods for Your Content:</h3>';
+                    result.results.forEach((neighborhood, index) => {
+                        html += `
+                            <div class="neighborhood-result">
+                                <div class="neighborhood-name">${index + 1}. ${neighborhood.name}</div>
+                                <div class="neighborhood-vibe">✨ Vibe: ${neighborhood.vibe}</div>
+                                <div class="neighborhood-best-for">🎬 Perfect for: ${neighborhood.best_for}</div>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                }
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('queryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                processQuery();
+            }
+        });
+    </script>
+</body>
+</html>

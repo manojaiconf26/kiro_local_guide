@@ -1,0 +1,1 @@
+"""Property-based tests for Chennai Local Guide."""

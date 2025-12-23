@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Chennai Local Guide - Content Creator Edition</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="help.js"></script>
+    <script src="app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd23f 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f7931e;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #e8841a;
+            transform: translateY(-2px);
+        }
+
+        .quick-examples {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .example-btn {
+            padding: 8px 15px;
+            background: #fff3e0;
+            border: 1px solid #ff6b35;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: #ff6b35;
+        }
+
+        .example-btn:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .slang-result {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .slang-term {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 5px;
+        }
+
+        .slang-definition {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .slang-usage {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .vlogger-tip {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #f7931e;
+        }
+
+        .neighborhood-result {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #f7931e;
+        }
+
+        .neighborhood-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f7931e;
+            margin-bottom: 5px;
+        }
+
+        .neighborhood-vibe {
+            margin-bottom: 8px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .neighborhood-best-for {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .maps-link {
+            display: inline-block;
+            background: #4285f4;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .maps-link:hover {
+            background: #3367d6;
+        }
+
+        .insider-tip {
+            background: #fff8e1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin-top: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #f44336;
+            margin-top: 15px;
+        }
+
+        .suggestions {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .suggestions h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-item {
+            background: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .suggestion-item:hover {
+            background: #f1f8e9;
+        }
+
+        @media (max-width: 600px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .quick-examples {
+                justify-content: center;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 Chennai Local Guide</h1>
+            <p>Tamil Slang Translator & Neighborhood Finder for Content Creators</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="queryInput" placeholder="Ask about Chennai slang or where to film content..." />
+                    <button class="btn btn-primary" onclick="processQuery()">🔍 Search</button>
+                    <button class="btn btn-secondary" onclick="showHelp()" title="Show help and examples">❓ Help</button>
+                </div>
+                
+                <div class="quick-examples">
+                    <button class="example-btn" onclick="setQuery('What does semma mean?')">semma meaning?</button>
+                    <button class="example-btn" onclick="setQuery('Where to film food content?')">food spots?</button>
+                    <button class="example-btn" onclick="setQuery('What is machaan?')">machaan?</button>
+                    <button class="example-btn" onclick="setQuery('Best cultural neighborhoods?')">cultural areas?</button>
+                    <button class="example-btn" onclick="setQuery('vera level gethu')">vera level?</button>
+                    <button class="example-btn" onclick="setQuery('Marina Beach filming')">Marina Beach?</button>
+                </div>
+            </div>
+            
+            <div id="results" class="results">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chennai Local Guide context data from product.md
+        const chennaiContext = {
+            slang: {
+                'machaan': {
+                    definition: 'Friend, buddy (used between close friends)',
+                    usage: 'Machaan, let\'s go to Marina Beach',
+                    vlogger_tip: 'Perfect for showing local friendship culture, use when interacting with locals'
+                },
+                'semma': {
+                    definition: 'Awesome, excellent, amazing',
+                    usage: 'That dosa was semma!',
+                    vlogger_tip: 'Great for food reactions, shows you appreciate local cuisine authentically'
+                },
+                'vera level': {
+                    definition: 'Next level, extraordinary',
+                    usage: 'This temple architecture is vera level',
+                    vlogger_tip: 'Use for genuine amazement at Chennai\'s culture and landmarks'
+                },
+                'gethu': {
+                    definition: 'Style, swag, attitude',
+                    usage: 'His dance moves have so much gethu',
+                    vlogger_tip: 'Perfect for cultural content, especially during festivals or performances'
+                },
+                'thala': {
+                    definition: 'Leader, boss (term of respect)',
+                    usage: 'Thala knows the best filter coffee spot',
+                    vlogger_tip: 'Shows respect for local knowledge, great for interviewing locals'
+                },
+                'mokka': {
+                    definition: 'Boring, lame, not interesting',
+                    usage: 'That movie was total mokka',
+                    vlogger_tip: 'Use sparingly, shows you understand local criticism culture'
+                },
+                'scene': {
+                    definition: 'Situation, what\'s happening',
+                    usage: 'What\'s the scene at Express Avenue?',
+                    vlogger_tip: 'Great for asking about local happenings or events'
+                },
+                'apdiye': {
+                    definition: 'Just like that, casually',
+                    usage: 'Apdiye we went to Pondy Bazaar',
+                    vlogger_tip: 'Shows casual, local way of speaking about activities'
+                }
+            },
+            neighborhoods: {
+                't nagar': {
+                    name: 'T. Nagar',
+                    vibe: 'Bustling shopping paradise, traditional meets modern',
+                    best_for: 'Shopping hauls, street food, cultural immersion',
+                    google_maps_link: 'https://maps.google.com/maps?q=T.+Nagar,+Chennai',
+                    insider_tip: 'Early morning (7-9am) for less crowded shots, evening (5-7pm) for authentic local energy',
+                    tags: ['shopping', 'food', 'traditional', 'bustling']
+                },
+                'marina beach': {
+                    name: 'Marina Beach Area',
+                    vibe: 'Scenic coastline, evening hangout spot, local life',
+                    best_for: 'Sunset shots, local lifestyle, street food',
+                    google_maps_link: 'https://maps.google.com/maps?q=Marina+Beach,+Chennai',
+                    insider_tip: 'Golden hour (6-7pm) is magical, avoid midday heat',
+                    tags: ['scenic', 'beach', 'sunset', 'street food']
+                },
+                'mylapore': {
+                    name: 'Mylapore',
+                    vibe: 'Cultural heart, traditional Tamil culture, spiritual',
+                    best_for: 'Temple visits, classical arts, heritage walks',
+                    google_maps_link: 'https://maps.google.com/maps?q=Mylapore,+Chennai',
+                    insider_tip: 'Festival seasons (Dec-Jan) offer incredible cultural content',
+                    tags: ['cultural', 'spiritual', 'traditional', 'heritage']
+                },
+                'besant nagar': {
+                    name: 'Besant Nagar (Bessy)',
+                    vibe: 'Coastal, trendy, young crowd, cafe culture',
+                    best_for: 'Beach lifestyle, cafes, modern Chennai',
+                    google_maps_link: 'https://maps.google.com/maps?q=Besant+Nagar,+Chennai',
+                    insider_tip: 'Weekend mornings for joggers and local life, evenings for cafe culture',
+                    tags: ['trendy', 'cafe', 'beach', 'modern']
+                },
+                'royapettah': {
+                    name: 'Royapettah',
+                    vibe: 'Diverse, multicultural, food paradise',
+                    best_for: 'Street food tours, cultural diversity',
+                    google_maps_link: 'https://maps.google.com/maps?q=Royapettah,+Chennai',
+                    insider_tip: 'Lunch time (12-2pm) for authentic food culture',
+                    tags: ['diverse', 'food', 'multicultural', 'street food']
+                },
+                'adyar': {
+                    name: 'Adyar',
+                    vibe: 'Upscale residential, river views, peaceful',
+                    best_for: 'Nature in city, upscale lifestyle, peaceful moments',
+                    google_maps_link: 'https://maps.google.com/maps?q=Adyar,+Chennai',
+                    insider_tip: 'Early morning for nature content, evening for upscale dining',
+                    tags: ['upscale', 'peaceful', 'nature', 'residential']
+                }
+            }
+        };
+
+        function setQuery(query) {
+            document.getElementById('queryInput').value = query;
+            processQuery();
+        }
+
+        function processQuery() {
+            const query = document.getElementById('queryInput').value.trim();
+            if (!query) {
+                showError('Please enter a query to search!');
+                return;
+            }
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = '<div class="loading">🔍 Analyzing your Chennai query...</div>';
+
+            // Simulate processing delay for better UX
+            setTimeout(() => {
+                try {
+                    const result = analyzeQuery(query);
+                    displayResults(result, query);
+                } catch (error) {
+                    showError('Sorry, there was an error processing your query. Please try again.');
+                }
+            }, 500);
+        }
+
+        function analyzeQuery(query) {
+            const queryLower = query.toLowerCase();
+            
+            // Check for multi-intent queries
+            const hasSlangKeywords = ['meaning', 'what does', 'what is', 'translate', 'explain', 'definition'].some(keyword => queryLower.includes(keyword));
+            const hasNeighborhoodKeywords = ['neighborhood', 'area', 'where', 'visit', 'film', 'shoot', 'spot', 'place', 'location'].some(keyword => queryLower.includes(keyword));
+            
+            if (hasSlangKeywords && hasNeighborhoodKeywords) {
+                return {
+                    type: 'multi_intent',
+                    slang_results: translateSlang(query),
+                    neighborhood_results: getNeighborhoodRecommendations(query)
+                };
+            } else if (hasSlangKeywords || containsKnownSlang(query)) {
+                return {
+                    type: 'slang',
+                    results: translateSlang(query)
+                };
+            } else {
+                return {
+                    type: 'neighborhood',
+                    results: getNeighborhoodRecommendations(query)
+                };
+            }
+        }
+
+        function containsKnownSlang(query) {
+            const queryLower = query.toLowerCase();
+            return Object.keys(chennaiContext.slang).some(term => queryLower.includes(term));
+        }
+
+        function translateSlang(query) {
+            const queryLower = query.toLowerCase();
+            const foundSlang = [];
+
+            for (const [term, info] of Object.entries(chennaiContext.slang)) {
+                if (queryLower.includes(term)) {
+                    foundSlang.push({
+                        term: term,
+                        ...info
+                    });
+                }
+            }
+
+            return foundSlang;
+        }
+
+        function getNeighborhoodRecommendations(query) {
+            const queryLower = query.toLowerCase();
+            const recommendations = [];
+
+            // Content type scoring
+            const contentTypes = {
+                food: ['food', 'eat', 'restaurant', 'cafe', 'dining', 'street food', 'dosa', 'biryani'],
+                cultural: ['culture', 'temple', 'heritage', 'traditional', 'classical', 'spiritual'],
+                scenic: ['view', 'photo', 'scenic', 'sunset', 'beach', 'beautiful', 'nature'],
+                shopping: ['shopping', 'market', 'bazaar', 'buy', 'mall'],
+                trendy: ['trendy', 'modern', 'cafe', 'young', 'hip'],
+                peaceful: ['peaceful', 'quiet', 'calm', 'nature', 'relax']
+            };
+
+            for (const [key, neighborhood] of Object.entries(chennaiContext.neighborhoods)) {
+                let score = 0;
+                
+                // Direct name match gets highest score
+                if (queryLower.includes(key) || queryLower.includes(neighborhood.name.toLowerCase())) {
+                    score += 10;
+                }
+                
+                // Score based on content type match
+                for (const [type, keywords] of Object.entries(contentTypes)) {
+                    if (keywords.some(keyword => queryLower.includes(keyword))) {
+                        if (neighborhood.tags.includes(type) || 
+                            keywords.some(keyword => neighborhood.best_for.toLowerCase().includes(keyword))) {
+                            score += 3;
+                        }
+                    }
+                }
+
+                // Score based on vibe match
+                const vibeWords = neighborhood.vibe.toLowerCase().split(' ');
+                vibeWords.forEach(word => {
+                    if (queryLower.includes(word)) {
+                        score += 2;
+                    }
+                });
+
+                if (score > 0) {
+                    recommendations.push({
+                        ...neighborhood,
+                        score: score
+                    });
+                }
+            }
+
+            // If no specific matches, return all neighborhoods sorted by general relevance
+            if (recommendations.length === 0) {
+                return Object.values(chennaiContext.neighborhoods).slice(0, 3);
+            }
+
+            // Sort by score and return top 3
+            return recommendations
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 3);
+        }
+
+        function displayResults(result, originalQuery) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (result.type === 'multi_intent') {
+                let html = '';
+                
+                if (result.slang_results.length > 0) {
+                    html += '<h3>🗣️ Chennai Slang Translation:</h3>';
+                    result.slang_results.forEach(slang => {
+                        html += createSlangResultHTML(slang);
+                    });
+                }
+                
+                if (result.neighborhood_results.length > 0) {
+                    html += '<h3 style="margin-top: 30px;">🏙️ Perfect Neighborhoods for Your Content:</h3>';
+                    result.neighborhood_results.forEach((neighborhood, index) => {
+                        html += createNeighborhoodResultHTML(neighborhood, index);
+                    });
+                }
+                
+                resultsDiv.innerHTML = html;
+                
+            } else if (result.type === 'slang') {
+                if (result.results.length === 0) {
+                    showNoSlangResults(originalQuery);
+                } else {
+                    let html = '<h3>🗣️ Chennai Slang Translation:</h3>';
+                    result.results.forEach(slang => {
+                        html += createSlangResultHTML(slang);
+                    });
+                    resultsDiv.innerHTML = html;
+                }
+            } else if (result.type === 'neighborhood') {
+                if (result.results.length === 0) {
+                    showNoNeighborhoodResults(originalQuery);
+                } else {
+                    let html = '<h3>🏙️ Perfect Chennai Neighborhoods for Your Content:</h3>';
+                    result.results.forEach((neighborhood, index) => {
+                        html += createNeighborhoodResultHTML(neighborhood, index);
+                    });
+                    resultsDiv.innerHTML = html;
+                }
+            }
+        }
+
+        function createSlangResultHTML(slang) {
+            return `
+                <div class="slang-result">
+                    <div class="slang-term">"${slang.term}"</div>
+                    <div class="slang-definition">${slang.definition}</div>
+                    ${slang.usage ? `<div class="slang-usage">💬 Example: "${slang.usage}"</div>` : ''}
+                    ${slang.vlogger_tip ? `<div class="vlogger-tip">💡 Content Creator Tip: ${slang.vlogger_tip}</div>` : ''}
+                </div>
+            `;
+        }
+
+        function createNeighborhoodResultHTML(neighborhood, index) {
+            return `
+                <div class="neighborhood-result">
+                    <div class="neighborhood-name">${index !== undefined ? (index + 1) + '. ' : ''}${neighborhood.name}</div>
+                    <div class="neighborhood-vibe">✨ Vibe: ${neighborhood.vibe}</div>
+                    <div class="neighborhood-best-for">🎬 Perfect for: ${neighborhood.best_for}</div>
+                    ${neighborhood.insider_tip ? `<div class="insider-tip">💡 Insider Tip: ${neighborhood.insider_tip}</div>` : ''}
+                    ${neighborhood.google_maps_link ? `<a href="${neighborhood.google_maps_link}" target="_blank" class="maps-link">📍 Open in Google Maps</a>` : ''}
+                </div>
+            `;
+        }
+
+        function showNoSlangResults(query) {
+            const suggestions = ['semma', 'machaan', 'vera level', 'gethu', 'thala', 'mokka'];
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    🤔 No Chennai slang detected in your query.
+                </div>
+                <div class="suggestions">
+                    <h4>Try asking about these popular Chennai terms:</h4>
+                    ${suggestions.map(term => `<div class="suggestion-item" onclick="setQuery('What does ${term} mean?')">"${term}" - Click to learn more</div>`).join('')}
+                </div>
+            `;
+        }
+
+        function showNoNeighborhoodResults(query) {
+            const suggestions = [
+                'Where to film food content in Chennai?',
+                'Best cultural neighborhoods in Chennai?',
+                'Scenic spots for content creation?',
+                'Traditional areas in Chennai?'
+            ];
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="no-results">
+                    🏙️ No specific neighborhood matches found for your query.
+                </div>
+                <div class="suggestions">
+                    <h4>Try these popular content creation queries:</h4>
+                    ${suggestions.map(suggestion => `<div class="suggestion-item" onclick="setQuery('${suggestion}')">${suggestion}</div>`).join('')}
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('queryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                processQuery();
+            }
+        });
+
+        // Auto-focus on input when page loads
+        window.addEventListener('load', function() {
+            document.getElementById('queryInput').focus();
+        });
+    </script>
+</body>
+</html>
